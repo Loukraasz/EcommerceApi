@@ -25,19 +25,19 @@ public class EcommerceController {
     @Autowired
     EcommerceRepository ecommerceRepository;
 
-    @PostMapping("/ec-prod")
+    @PostMapping("/ecProd")
     public ResponseEntity<EcommerceModels> saveEcProd(@RequestBody @Valid EcommerceDto ecommerceDto){
         var ecommerceModels = new EcommerceModels();
         BeanUtils.copyProperties(ecommerceDto, ecommerceModels);
         return ResponseEntity.status(HttpStatus.CREATED).body(ecommerceRepository.save(ecommerceModels));
     }
-    @GetMapping("/ec-prod")
+    @GetMapping("/ecProd")
     public ResponseEntity<List<EcommerceModels>> getAll(){
         return ResponseEntity.status(HttpStatus.OK).body(ecommerceRepository.findAll());
     }
-    @GetMapping("/ec-prod/{name}")
-    public ResponseEntity<Object> getOne(@RequestBody @Valid @PathVariable(value="name" ) String name){
-        Optional<EcommerceModels> product = ecommerceRepository.findByName(name);
+    @GetMapping("/ecProd/{name}")
+    public ResponseEntity<Object> getOne(@RequestBody @Valid @PathVariable(value="name" ) String name, EcommerceDto ecommerceDto){
+        Optional<EcommerceModels> product = ecommerceRepository.findByName(ecommerceDto.name());
         if(product.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("not found");
         }
@@ -45,7 +45,7 @@ public class EcommerceController {
 
     }
 
-    @PutMapping("/ec-prod/{name}")
+    @PutMapping("/ecProd/{name}")
     public ResponseEntity<Object>update(@PathVariable (value="name") String name, @RequestBody @Valid EcommerceDto ecommerceDto  ){
         Optional<EcommerceModels> product = ecommerceRepository.findByName(name);
         if(product.isEmpty()){
@@ -55,7 +55,7 @@ public class EcommerceController {
         BeanUtils.copyProperties(ecommerceDto, product);
         return ResponseEntity.status(HttpStatus.OK).body(ecommerceRepository.save(product0));
     }
-    @DeleteMapping("/ec-prod/{id}")
+    @DeleteMapping("/ecProd/{id}")
     public ResponseEntity<Object> delete(@PathVariable(value="id") UUID id){
         Optional<EcommerceModels> product = ecommerceRepository.findById(id);
         if(product.isEmpty()){

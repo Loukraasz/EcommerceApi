@@ -26,7 +26,7 @@ public class EcommerceControllerUser {
     @Autowired
     EcommerceRepositoryUser ecommerceRepository;
 
-    @PostMapping("/ecUser")
+    @PostMapping("/ecUserPost")
     public ResponseEntity<EcommerceModelsUser> saveEcProd(@RequestBody @Valid EcommerceDtoUser ecommerceDto){
         var ecommerceModels = new EcommerceModelsUser();
         BeanUtils.copyProperties(ecommerceDto, ecommerceModels);
@@ -36,27 +36,27 @@ public class EcommerceControllerUser {
     public ResponseEntity<List<EcommerceModelsUser>> getAll(){
         return ResponseEntity.status(HttpStatus.OK).body(ecommerceRepository.findAll());
     }
-    @GetMapping("/ecUser/{name}")
-    public ResponseEntity<Object> getOne(@RequestBody @Valid @PathVariable(value="name" ) String name, EcommerceDtoUser ecommerceDto){
-        Optional<EcommerceModelsUser> product = ecommerceRepository.findByName(ecommerceDto.name());
+    @GetMapping("/ecUser/{email}")
+    public ResponseEntity<Object> getOne(@RequestBody @Valid @PathVariable(value="email" ) String email, EcommerceDtoUser ecommerceDto){
+        Optional<EcommerceModelsUser> product = ecommerceRepository.findByEmail(ecommerceDto.email());
         if(product.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("not found");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(ecommerceRepository.findByName(name));
+        return ResponseEntity.status(HttpStatus.OK).body(ecommerceRepository.findByEmail(email));
 
     }
 
-    @PutMapping("/ecUser/{name}")
-    public ResponseEntity<Object>update(@PathVariable (value="name") String name, @RequestBody @Valid EcommerceDtoUser ecommerceDto  ){
-        Optional<EcommerceModelsUser> product = ecommerceRepository.findByName(name);
+    @PutMapping("/ecUserPut/{email}")
+    public ResponseEntity<Object>update(@PathVariable (value="email") String email, @RequestBody @Valid EcommerceDtoUser ecommerceDto  ){
+        Optional<EcommerceModelsUser> product = ecommerceRepository.findByEmail(email);
         if(product.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("not found");
     }
         var product0 = product.get();
-        BeanUtils.copyProperties(ecommerceDto, product);
+        BeanUtils.copyProperties(ecommerceDto, product0);
         return ResponseEntity.status(HttpStatus.OK).body(ecommerceRepository.save(product0));
     }
-    @DeleteMapping("/ecUser/{id}")
+    @DeleteMapping("/ecUserDelete/{id}")
     public ResponseEntity<Object> delete(@PathVariable(value="id") UUID id){
         Optional<EcommerceModelsUser> product = ecommerceRepository.findById(id);
         if(product.isEmpty()){

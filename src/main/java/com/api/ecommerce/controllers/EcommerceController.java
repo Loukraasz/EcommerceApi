@@ -52,7 +52,7 @@ public class EcommerceController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("not found");
     }
         var product0 = product.get();
-        BeanUtils.copyProperties(ecommerceDto, product);
+        BeanUtils.copyProperties(ecommerceDto, product0);
         return ResponseEntity.status(HttpStatus.OK).body(ecommerceRepository.save(product0));
     }
     @DeleteMapping("/ecProd/{id}")

@@ -19,6 +19,16 @@ public class EcommerceModelsUser {
     
     private String password;
 
+    private String logged;
+
+    public String getLogged() {
+        return logged;
+    }
+
+    public void setLogged(String logged) {
+        this.logged = logged;
+    }
+
     public String getEmail() {
         return email;
     }

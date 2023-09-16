@@ -11,6 +11,8 @@ public interface EcommerceRepositoryUser extends JpaRepository<EcommerceModelsUs
         Optional<EcommerceModelsUser> findByName(String name);
         
         Optional<EcommerceModelsUser> findByEmail(String email);
+
+        Optional<EcommerceModelsUser> findBySessionId(String sessionId);
         
     
 }

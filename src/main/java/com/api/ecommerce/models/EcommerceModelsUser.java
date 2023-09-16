@@ -19,14 +19,14 @@ public class EcommerceModelsUser {
     
     private String password;
 
-    private String logged;
-
-    public String getLogged() {
-        return logged;
+    private String sessionId;
+    
+    public String getSessionId() {
+        return sessionId;
     }
 
-    public void setLogged(String logged) {
-        this.logged = logged;
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
     public String getEmail() {
@@ -51,6 +51,13 @@ public class EcommerceModelsUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    public UUID getId() {
+        return Id;
+    }
+
+    public void setId(UUID id) {
+        Id = id;
     }
 
 

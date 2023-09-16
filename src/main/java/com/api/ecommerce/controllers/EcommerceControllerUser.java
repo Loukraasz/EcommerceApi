@@ -45,6 +45,15 @@ public class EcommerceControllerUser {
         return ResponseEntity.status(HttpStatus.OK).body(ecommerceRepository.findByEmail(email));
 
     }
+    @GetMapping("/ecUserSID/{sessionId}")
+    public ResponseEntity<Object> getSession(@RequestBody @Valid @PathVariable(value="sessionId" ) String sessionId, EcommerceDtoUser ecommerceDto){
+        Optional<EcommerceModelsUser> product = ecommerceRepository.findBySessionId(ecommerceDto.sessionId());
+        if(product.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("not found");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(ecommerceRepository.findBySessionId(sessionId));
+
+    }
 
     @PutMapping("/ecUserPut/{email}")
     public ResponseEntity<Object>update(@PathVariable (value="email") String email, @RequestBody @Valid EcommerceDtoUser ecommerceDto  ){
